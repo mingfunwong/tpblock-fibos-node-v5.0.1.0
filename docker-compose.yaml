@@ -1,0 +1,14 @@
+services:
+  node-server: # 启动节点服务
+  image: tpblock/fibos-node:v5.0.1.0 # 镜像名称
+  container_name: fibos-node # 容器名称
+  volumes:
+    - ./fibos-node/data:/node/data # 设置节点数据挂载⽬录, 挂载的宿主机⽬录可以使⽤下载解压后全节
+    - ./resources:/app/resources # 设置配置⽂件挂载⽬录
+  ports:
+    - "8870:8870" # HTTP 节点端⼝映射
+    - "9870:9870" # P2P 节点端⼝映射
+  env_file:
+    - ./resources/env.list # 环境变量
+  entrypoint: ["sh", "/app/entrypoint.sh"] # 启动脚本
+  command: ["node"] # 启动⼊⼝参数(fibos index.js)
